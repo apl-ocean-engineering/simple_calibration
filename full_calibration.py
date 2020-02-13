@@ -18,6 +18,7 @@ import matplotlib.pyplot as plt
 
 # Create dict of focus values mapped to corresponding calibration images
 folders = os.listdir(".")
+print(folders)
 imagefiles = None
 
 scale_percent = 30 # change if want to resize image for faster processing
@@ -32,6 +33,15 @@ for x in folders:
     except ValueError:
         folders.remove(x)
 
+try:
+    folders.remove('README.md')
+    folders.remove('.git')
+    folders.remove('.gitignore')
+    folders.remove('0.7_redrawn.png')
+except:
+    print('error')
+
+print(folders)
 focus_dict = defaultdict()
 for focus in folders:
     focus_dict[focus] = []
@@ -141,7 +151,7 @@ for focus in focus_dict:
         dst = cv2.undistort(gray, mtx, dist, None, newcameramtx)
 
         print("REDRAW COMPLETE, SAVING")
-        filename = str(focus) + ' redrawn.png'
+        filename = str(focus) + '_redrawn.png'
         cv2.imwrite(filename,dst)
 
 
